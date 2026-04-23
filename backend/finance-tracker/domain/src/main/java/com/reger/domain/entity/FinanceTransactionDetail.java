@@ -1,4 +1,4 @@
-package entity;
+package com.reger.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
