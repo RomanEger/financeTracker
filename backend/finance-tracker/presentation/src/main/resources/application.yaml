@@ -6,9 +6,9 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: ${DDL}
-    show-sql: ${SHOW_SQL}
+      ddl-auto: ${DDL:validate}
+    show-sql: ${SHOW_SQL:false}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: ${SHOW_SQL}
+        format_sql: ${SHOW_SQL:false}
