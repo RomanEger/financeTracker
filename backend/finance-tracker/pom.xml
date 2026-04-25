@@ -18,6 +18,7 @@
     <modules>
         <module>domain</module>
         <module>infrastructure</module>
+        <module>presentation</module>
     </modules>
 
     <properties>
