@@ -1,5 +1,6 @@
 package com.reger.presentation;
 
+import com.reger.application.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<String> handleUsernameNotFound(UsernameNotFoundException ex) {
+        logger.error(ex.getMessage(), ex);
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleNotFound(NotFoundException ex) {
         logger.error(ex.getMessage(), ex);
         return ResponseEntity.notFound().build();
     }
