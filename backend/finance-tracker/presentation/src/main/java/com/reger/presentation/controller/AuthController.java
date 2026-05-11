@@ -6,12 +6,14 @@ import com.reger.application.dto.UserResponse;
 import com.reger.application.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ public class AuthController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final SecurityContextRepository securityContextRepository;
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest request) {
@@ -35,7 +38,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<UserResponse> login(
             @RequestBody LoginRequest request,
-            HttpServletRequest httpServletRequest) {
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse) {
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.userName(),
@@ -43,8 +47,10 @@ public class AuthController {
                 )
         );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        httpServletRequest.getSession(true);
+        var context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+        securityContextRepository.saveContext(context, httpServletRequest, httpServletResponse);
 
         var userName = authentication.getName();
         var response = userService.findByUsername(userName);

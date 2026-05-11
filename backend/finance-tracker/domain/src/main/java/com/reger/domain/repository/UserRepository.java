@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface UserRepository {
     boolean existsByUsername(String username);
 
+    Optional<User> findByUsernameWithRoles(String username);
+
     Optional<User> findByUsername(String username);
 
     Optional<User> findById(UUID id);
