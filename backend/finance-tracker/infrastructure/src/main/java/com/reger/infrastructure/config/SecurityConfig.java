@@ -21,12 +21,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        var apiAuthPath = "/api/auth/**";
+        var swaggerUIPath = "/swagger-ui/**";
+        var v3APIDocsPath = "/v3/api-docs/**";
+
         return http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .ignoringRequestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                swaggerUIPath,
+                                v3APIDocsPath,
+                                apiAuthPath
                         )
                 )
                 .sessionManagement(session -> session
@@ -35,10 +40,10 @@ public class SecurityConfig {
                         .maxSessionsPreventsLogin(false)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(apiAuthPath).permitAll()
                         .requestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                swaggerUIPath,
+                                v3APIDocsPath
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
