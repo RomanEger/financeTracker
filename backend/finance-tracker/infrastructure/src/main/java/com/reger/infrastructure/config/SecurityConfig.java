@@ -1,6 +1,5 @@
 package com.reger.infrastructure.config;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,13 +53,8 @@ public class SecurityConfig {
                         .logoutUrl("/api/auth/logout")
                         .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true)
-                        .logoutSuccessHandler((req, res, auth) -> {
-                            if (auth == null) {
-                                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            } else {
-                                res.setStatus(HttpServletResponse.SC_OK);
-                            }
-                        })
+                        .logoutSuccessHandler((req, res, auth) ->
+                                res.setStatus(200))
                 )
                 .build();
     }
