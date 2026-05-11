@@ -3,7 +3,9 @@ package com.reger.presentation;
 import com.reger.application.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,5 +31,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleException(Exception ex) {
         logger.error(ex.getMessage(), ex);
         return ResponseEntity.internalServerError().build();
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<String> handleAuthorizationDenied(AuthorizationDeniedException ex) {
+        logger.error(ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 }

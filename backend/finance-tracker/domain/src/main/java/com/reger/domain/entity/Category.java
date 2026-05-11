@@ -22,4 +22,11 @@ public class Category {
 
     @Column(name = "category_name", length = 120, nullable = false, unique = true)
     private String name;
+
+    public static Category create(String name) {
+        Category category = new Category();
+        category.setName(name);
+
+        return category;
+    }
 }

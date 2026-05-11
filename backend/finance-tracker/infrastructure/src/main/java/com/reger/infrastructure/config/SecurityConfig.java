@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,11 +20,13 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         var apiAuthPath = "/api/auth/**";
+        var apiCategoryPath = "/api/category/**";
         var swaggerUIPath = "/swagger-ui/**";
         var v3APIDocsPath = "/v3/api-docs/**";
 
@@ -33,7 +36,8 @@ public class SecurityConfig {
                         .ignoringRequestMatchers(
                                 swaggerUIPath,
                                 v3APIDocsPath,
-                                apiAuthPath
+                                apiAuthPath,
+                                apiCategoryPath
                         )
                 )
                 .sessionManagement(session -> session
