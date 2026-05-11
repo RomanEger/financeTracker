@@ -31,8 +31,9 @@ public class UserService {
         return new UserResponse(savedUser.getId(), savedUser.getUsername());
     }
 
-    public User findByUsername(String username) throws UsernameNotFoundException {
+    public UserResponse findByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
+                .map((user) -> new UserResponse(user.getId(), user.getUsername()))
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found: " + username));
     }
 }
