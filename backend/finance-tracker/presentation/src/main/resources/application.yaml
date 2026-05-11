@@ -12,3 +12,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: ${SHOW_SQL:false}
+
+  springdoc:
+    api-docs:
+      enabled: ${SWAGGER_ENABLED:false}
+    swagger-ui:
+      enabled: ${SWAGGER_ENABLED:false}

@@ -24,14 +24,22 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        )
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .maximumSessions(1)                    // один активный сеанс на пользователя
-                        .maxSessionsPreventsLogin(false)       // новый логин вытесняет старый
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
