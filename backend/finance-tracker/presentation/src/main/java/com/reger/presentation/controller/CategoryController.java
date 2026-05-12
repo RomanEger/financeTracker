@@ -46,9 +46,9 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCategory(@RequestParam UUID id) {
+    public void deleteCategory(@PathVariable UUID id) {
         categoryService.deleteById(id);
     }
 }
