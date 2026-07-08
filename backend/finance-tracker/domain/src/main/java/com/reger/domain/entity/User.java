@@ -41,14 +41,6 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_groups",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id")
-    )
-    private Set<Group> groups = new HashSet<>();
-
     public void changePassword(String newPasswordHash) {
         if (newPasswordHash == null || newPasswordHash.isBlank()) {
             throw new IllegalArgumentException("Password hash cannot be blank");
