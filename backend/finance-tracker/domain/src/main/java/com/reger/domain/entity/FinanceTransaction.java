@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -42,7 +44,7 @@ public class FinanceTransaction {
     @JoinColumn(name = "recipient_id", nullable = false)
     private Counterparty recipient;
 
-    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "account_type", nullable = false, columnDefinition = "account_type")
     private AccountType accountType;
 

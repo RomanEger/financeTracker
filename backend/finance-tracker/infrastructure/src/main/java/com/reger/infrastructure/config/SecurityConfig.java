@@ -24,20 +24,22 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        var apiAuthPath = "/api/auth/**";
-        var apiCategoryPath = "/api/category/**";
-        var swaggerUIPath = "/swagger-ui/**";
-        var v3APIDocsPath = "/v3/api-docs/**";
+    public SecurityFilterChain filterChain(HttpSecurity http) {
+        final var API_AUTH_PATH = "/api/auth/**";
+        final var API_CATEGORY_PATH = "/api/category/**";
+        final var API_COUNTERPARTY_PATH = "/api/counterparty/**";
+        final var SWAGGER_UI_PATH = "/swagger-ui/**";
+        final var V3_API_DOCS_PATH = "/v3/api-docs/**";
 
         return http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .ignoringRequestMatchers(
-                                swaggerUIPath,
-                                v3APIDocsPath,
-                                apiAuthPath,
-                                apiCategoryPath
+                                SWAGGER_UI_PATH,
+                                V3_API_DOCS_PATH,
+                                API_AUTH_PATH,
+                                API_CATEGORY_PATH,
+                                API_COUNTERPARTY_PATH
                         )
                 )
                 .sessionManagement(session -> session
@@ -46,10 +48,10 @@ public class SecurityConfig {
                         .maxSessionsPreventsLogin(false)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(apiAuthPath).permitAll()
+                        .requestMatchers(API_AUTH_PATH).permitAll()
                         .requestMatchers(
-                                swaggerUIPath,
-                                v3APIDocsPath
+                                SWAGGER_UI_PATH,
+                                V3_API_DOCS_PATH
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

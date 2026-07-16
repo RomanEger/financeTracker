@@ -8,6 +8,7 @@ import com.reger.domain.entity.Category;
 import com.reger.domain.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +32,7 @@ public class CategoryService {
                 .orElseThrow(() -> new NotFoundException("Category not found. Id: " + categoryId));
     }
 
+    @Transactional
     public CategoryDTO create(CategoryCreateDTO categoryDTO) {
         if (categoryRepository.existsByName(categoryDTO.categoryName())) {
             throw new IllegalStateException("Category with name " + categoryDTO.categoryName() + " already exists");
@@ -42,12 +44,14 @@ public class CategoryService {
         return CategoryDTO.from(newCategory);
     }
 
+    @Transactional
     public CategoryDTO update(CategoryUpdateDTO categoryDTO) {
         var updatedCategory = categoryRepository.update(categoryDTO.id(), categoryDTO.newCategoryName());
 
         return CategoryDTO.from(updatedCategory);
     }
 
+    @Transactional
     public void deleteById(UUID categoryId) {
         categoryRepository.delete(categoryId);
     }
