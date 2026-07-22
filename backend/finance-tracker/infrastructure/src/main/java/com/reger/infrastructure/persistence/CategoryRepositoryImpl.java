@@ -32,6 +32,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
+    public List<Category> findAllById(List<UUID> ids) {
+        return categoryJpaRepository.findAllById(ids);
+    }
+
+    @Override
     public boolean existsByName(String name) {
         return categoryJpaRepository.existsByNameIgnoreCase(name);
     }

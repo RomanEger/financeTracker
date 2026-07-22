@@ -13,4 +13,6 @@ public interface CounterpartyJpaRepository extends JpaRepository<Counterparty, U
     boolean existsByNameIgnoreCase(String name);
 
     boolean existsByNameIgnoreCaseAndIdNot(String name, UUID id);
+
+    Counterparty findByName(String name);
 }

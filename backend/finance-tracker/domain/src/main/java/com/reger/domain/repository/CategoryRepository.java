@@ -11,6 +11,8 @@ public interface CategoryRepository {
 
     Optional<Category> findById(UUID id);
 
+    List<Category> findAllById(List<UUID> ids);
+
     boolean existsByName(String name);
 
     Category create(Category category);

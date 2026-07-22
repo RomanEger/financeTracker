@@ -34,4 +34,12 @@ public class FinanceTransactionDetail {
 
     @Column(name = "price", precision = 15, scale = 2, nullable = false)
     private BigDecimal price;
+
+    public static FinanceTransactionDetail create(Category category, String productName, BigDecimal price) {
+        FinanceTransactionDetail detail = new FinanceTransactionDetail();
+        detail.setCategory(category);
+        detail.setProductName(productName);
+        detail.setPrice(price);
+        return detail;
+    }
 }

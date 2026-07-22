@@ -12,6 +12,8 @@ public interface CounterpartyRepository {
 
     Optional<Counterparty> findById(UUID id);
 
+    Counterparty getDefault();
+
     boolean existsByName(String name);
 
     boolean existsByName(String name, UUID excludeId);

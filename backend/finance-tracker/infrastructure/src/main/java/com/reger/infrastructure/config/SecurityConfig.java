@@ -28,6 +28,7 @@ public class SecurityConfig {
         final var API_AUTH_PATH = "/api/auth/**";
         final var API_CATEGORY_PATH = "/api/category/**";
         final var API_COUNTERPARTY_PATH = "/api/counterparty/**";
+        final var API_FINANCE_TRANSACTION_PATH = "/api/finance-transaction/**";
         final var SWAGGER_UI_PATH = "/swagger-ui/**";
         final var V3_API_DOCS_PATH = "/v3/api-docs/**";
 
@@ -39,7 +40,8 @@ public class SecurityConfig {
                                 V3_API_DOCS_PATH,
                                 API_AUTH_PATH,
                                 API_CATEGORY_PATH,
-                                API_COUNTERPARTY_PATH
+                                API_COUNTERPARTY_PATH,
+                                API_FINANCE_TRANSACTION_PATH
                         )
                 )
                 .sessionManagement(session -> session

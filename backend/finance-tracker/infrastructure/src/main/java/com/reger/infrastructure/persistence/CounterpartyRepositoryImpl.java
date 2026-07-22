@@ -32,6 +32,11 @@ public class CounterpartyRepositoryImpl implements CounterpartyRepository {
     }
 
     @Override
+    public Counterparty getDefault() {
+        return counterpartyJpaRepository.findByName("USER_DEFAULT_COUNTERPARTY");
+    }
+
+    @Override
     public boolean existsByName(String name) {
         return counterpartyJpaRepository.existsByNameIgnoreCase(name);
     }
